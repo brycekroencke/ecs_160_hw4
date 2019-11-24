@@ -40,6 +40,22 @@ const char* get_item(char* input_line, int column_number)
     return NULL;
 }
 
+//function to return column number by comparing column names in header
+int find(char* columnName, char* row){
+	char* tokens =strtok(row, ",");
+	int count = 0;
+	while(tokens != NULL ){
+		if(strcmp(tokens, columnName) == 0){
+			return count;
+		}
+		else{
+			count ++;
+			tokens = strtok(NULL, ",");
+		}
+	}
+	return count;
+}
+
 int main(int argc, char *argv[]) {
   struct Tweeter tweeter_array[MAX_CSV_FILE_LEN];
   for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {

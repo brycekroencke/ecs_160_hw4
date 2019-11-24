@@ -30,7 +30,7 @@ const char* get_item(char* input_line, int column_number)
     const char* split_by_comma;
     for (split_by_comma = strtok(input_line, ",");
             split_by_comma && *split_by_comma;
-            split_by_comma = strtok(NULL, ";\n"))
+            split_by_comma = strtok(NULL, ",\n"))
     {
         if (!--column_number)
             return split_by_comma;

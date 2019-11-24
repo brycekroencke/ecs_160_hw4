@@ -51,4 +51,12 @@ int main(int argc, char *argv[]) {
   if (!file_path) {
       exit(1);
   }
+
+  //find_item "name" in header
+
+  //read in CSV and fill tweeter_array with names and updated counts
+
+  //sort tweeter_array by tweet count (merge sort maybe)
+
+  //output top 10 tweeters name and count
 }

@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
   }
 
   //Argument 1 given by user is the file_path to the csv file
-  FILE *file = fopen(argv[1], "r");
+  FILE *file = fopen("cl-tweets-short-clean.csv", "r"); //fopen(argv[1], "r");
 
   if (!file) {
       exit(1);
@@ -62,16 +62,11 @@ int main(int argc, char *argv[]) {
     fgets(buff, 1024, (FILE*)file);
     count++;
     if(count != 1){
+      //ignore the header
       const char* name = get_item(buff, name_column);
       printf(name);
     }
   }while((getc(file))!=EOF);
-
-
-  // for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
-  //   const char* name = get_item()
-  // }
-
 
   //sort tweeter_array by tweet count (merge sort maybe)
 

@@ -46,15 +46,32 @@ int main(int argc, char *argv[]) {
   }
 
   //Argument 1 given by user is the file_path to the csv file
-  FILE *file_path = fopen(argv[1], "r");
+  FILE *file = fopen(argv[1], "r");
 
-  if (!file_path) {
+  if (!file) {
       exit(1);
   }
 
   //find_item "name" in header
+  int name_column;
 
   //read in CSV and fill tweeter_array with names and updated counts
+  int count=0;
+  do{
+    char buff[1024];
+    fgets(buff, 1024, (FILE*)file);
+    count++;
+    if(count != 1){
+      const char* name = get_item(buff, name_column);
+      printf(name);
+    }
+  }while((getc(file))!=EOF);
+
+
+  // for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
+  //   const char* name = get_item()
+  // }
+
 
   //sort tweeter_array by tweet count (merge sort maybe)
 

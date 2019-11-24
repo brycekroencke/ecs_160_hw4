@@ -19,11 +19,13 @@ struct Tweeter {
   int tweet_count;
 };
 
-// //Function for printing out the top 10 tweeters
-// void print_top_ten()
-// {
-//
-// }
+//Function for printing out the top 10 tweeters
+void print_top_ten(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN])
+{
+  for (int i = 0; i < 10; i++) {
+    printf("%s %d\n", tweeter_array[i].name, tweeter_array[i].tweet_count);
+  }
+}
 
 const char* get_item(char* input_line, int column_number)
 {

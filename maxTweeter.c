@@ -2,6 +2,7 @@
 //Included packages
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 //Given Definitions
@@ -17,6 +18,25 @@ struct Tweeter {
   char name[MAX_CHARS_IN_NAME];
   int tweet_count;
 };
+
+// //Function for printing out the top 10 tweeters
+// void print_top_ten()
+// {
+//
+// }
+
+const char* get_item(char* input_line, int column_number)
+{
+    const char* split_by_comma;
+    for (split_by_comma = strtok(input_line, ",");
+            split_by_comma && *split_by_comma;
+            split_by_comma = strtok(NULL, ";\n"))
+    {
+        if (!--column_number)
+            return split_by_comma;
+    }
+    return NULL;
+}
 
 int main(int argc, char *argv[]) {
   struct Tweeter tweeter_array[MAX_CSV_FILE_LEN];

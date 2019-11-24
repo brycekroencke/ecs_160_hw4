@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
     tweeter_array[i] = new_tweeter;
   }
 
+  //Argument 1 given by user is the file_path to the csv file
   FILE *file_path = fopen(argv[1], "r");
 
   if (!file_path) {

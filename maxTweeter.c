@@ -27,18 +27,6 @@ void print_top_ten(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN])
   }
 }
 
-const char* get_item(char* input_line, int column_number)
-{
-    const char* split_by_comma;
-    for (split_by_comma = strtok(input_line, ",");
-            split_by_comma && *split_by_comma;
-            split_by_comma = strtok(NULL, ",\n"))
-    {
-        if (!--column_number)
-            return split_by_comma;
-    }
-    return NULL;
-}
 
 //function to return column number by comparing column names in header
 int find(char* columnName, char* row){
@@ -79,10 +67,13 @@ int main(int argc, char *argv[]) {
     char buff[1024];
     fgets(buff, 1024, (FILE*)file);
     count++;
+    if(count == 1)
+      name_column = find("name", buff);
     if(count != 1){
       //ignore the header
       const char* name = get_item(buff, name_column);
-      printf(name);
+      //printf("column number = %d\n", name_column);
+      //printf("%s\n", name);
     }
   }while((getc(file))!=EOF);
 

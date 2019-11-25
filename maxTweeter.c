@@ -27,6 +27,19 @@ void print_top_ten(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN])
   }
 }
 
+const char* get_item(char* input_line, int column_number)
+{
+	int count = 0 ;
+    const char* split_by_comma;
+    while ((split_by_comma = strsep(&input_line, ",")) != NULL)
+    {
+        if (count == column_number){
+            return split_by_comma;
+		}
+		count ++;
+    }
+    return NULL;
+}
 
 //function to return column number by comparing column names in header
 int find(char* columnName, char* row){
@@ -43,6 +56,8 @@ int find(char* columnName, char* row){
 	}
 	return count;
 }
+
+
 
 int main(int argc, char *argv[]) {
   struct Tweeter tweeter_array[MAX_CSV_FILE_LEN];
@@ -67,15 +82,16 @@ int main(int argc, char *argv[]) {
     char buff[1024];
     fgets(buff, 1024, (FILE*)file);
     count++;
-    if(count == 1)
-      name_column = find("name", buff);
-    if(count != 1){
+	if(count == 1){
+		name_column = find("name", buff);
+		//printf("%d \n", name_column);
+	}
+    if(count > 1){
       //ignore the header
       const char* name = get_item(buff, name_column);
-      //printf("column number = %d\n", name_column);
-      //printf("%s\n", name);
+      printf( "%s\n", name);
     }
-  }while((getc(file))!=EOF);
+}while((getc(file))!=EOF);
 
   //sort tweeter_array by tweet count (merge sort maybe)
 

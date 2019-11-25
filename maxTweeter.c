@@ -1,4 +1,3 @@
-
 //Included packages
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,64 +42,64 @@ const char* get_item(char* input_line, int column_number)
 
 // the merge procedure in Merge-Sort
 void merge(struct Tweeter tweeter_array[], int l, int m, int r) {
-    //left side
-    int left_array_len = m - l + 1;
-    struct Tweeter L[left_array_len];
-    for (int i = 0; i < left_array_len; i++) {
-        strcpy(L[i].name, tweeter_array[l + i].name);
-        L[i].tweet_count = tweeter_array[l + i].tweet_count;
-    }
-
-    //right side
-    int right_array_len = r - m;
-    struct Tweeter R[right_array_len];
-    for (int j = 0; j < right_array_len; j++) {
-        strcpy(R[j].name, tweeter_array[m + 1 + j].name);
-        R[j].tweet_count = tweeter_array[m + 1 + j].tweet_count;
-    }
-
-    int i = 0;
-    int j = 0;
-    int k = l;
-
-    // merge arrays decreasing order
-    while (i < left_array_len && j < right_array_len) {
-        //compare the tweet counts
-        if (L[i].tweet_count <= R[j].tweet_count) {
-            strcpy(tweeter_array[k].name, R[j].name);
-            tweeter_array[k].tweet_count = R[j].tweet_count;
-            j++;
-        } else {
-            strcpy(tweeter_array[k].name, L[i].name);
-            tweeter_array[k].tweet_count = L[i].tweet_count;
-            i++;
+        //left side
+        int left_array_len = m - l + 1;
+        struct Tweeter L[left_array_len];
+        for (int i = 0; i < left_array_len; i++) {
+                strcpy(L[i].name, tweeter_array[l + i].name);
+                L[i].tweet_count = tweeter_array[l + i].tweet_count;
         }
 
-        k++;
-    }
+        //right side
+        int right_array_len = r - m;
+        struct Tweeter R[right_array_len];
+        for (int j = 0; j < right_array_len; j++) {
+                strcpy(R[j].name, tweeter_array[m + 1 + j].name);
+                R[j].tweet_count = tweeter_array[m + 1 + j].tweet_count;
+        }
 
-    // fill in the remaining element
-    while (i < left_array_len) {
-        tweeter_array[k] = L[i];
-        i++;
-        k++;
-    }
+        int i = 0;
+        int j = 0;
+        int k = l;
 
-    while (j < right_array_len) {
-        tweeter_array[k] = R[j];
-        j++;
-        k++;
-    }
+        // merge arrays decreasing order
+        while (i < left_array_len && j < right_array_len) {
+                //compare the tweet counts
+                if (L[i].tweet_count <= R[j].tweet_count) {
+                        strcpy(tweeter_array[k].name, R[j].name);
+                        tweeter_array[k].tweet_count = R[j].tweet_count;
+                        j++;
+                } else {
+                        strcpy(tweeter_array[k].name, L[i].name);
+                        tweeter_array[k].tweet_count = L[i].tweet_count;
+                        i++;
+                }
+
+                k++;
+        }
+
+        // fill in the remaining element
+        while (i < left_array_len) {
+                tweeter_array[k] = L[i];
+                i++;
+                k++;
+        }
+
+        while (j < right_array_len) {
+                tweeter_array[k] = R[j];
+                j++;
+                k++;
+        }
 }
 
 // main merge_sort call
 void merge_sort(struct Tweeter tweeter_array[], int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-        merge_sort(tweeter_array, l, m);
-        merge_sort(tweeter_array, m + 1, r);
-        merge(tweeter_array, l, m, r);
-    }
+        if (l < r) {
+                int m = l + (r - l) / 2;
+                merge_sort(tweeter_array, l, m);
+                merge_sort(tweeter_array, m + 1, r);
+                merge(tweeter_array, l, m, r);
+        }
 }
 
 //function to return column number by comparing column names in header
@@ -159,7 +158,7 @@ int main(int argc, char *argv[]) {
 
 
         for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
-          printf("%s\n", name_array[i]);
+                printf("%s\n", name_array[i]);
         }
 
         //sort tweeter_array by tweet count (merge sort maybe)

@@ -22,7 +22,7 @@ struct Tweeter {
 void print_top_ten(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN])
 {
         for (int i = 0; i < 10; i++) {
-                printf("%s %d\n", tweeter_array[i].name, tweeter_array[i].tweet_count);
+                printf("%s: %d\n", tweeter_array[i].name, tweeter_array[i].tweet_count);
         }
 }
 
@@ -118,8 +118,20 @@ int find(char* columnName, char* row){
         return count;
 }
 
+//find tweeter position in list
+int tweeterFind(const char* name , int num_tweeters, struct Tweeter tweeter_array[]){
+	for (int i = 0; i < num_tweeters; i++) {
+		if(strcmp(name, tweeter_array[i].name) == 0){
+			return i;
+		}
+    }
+	//tweeter not found
+	return -1;
+}
+
 int main(int argc, char *argv[]) {
         struct Tweeter tweeter_array[MAX_CSV_FILE_LEN];
+		int num_tweeters = 0;
         for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
                 struct Tweeter new_tweeter = {"", 0};
                 tweeter_array[i] = new_tweeter;
@@ -150,16 +162,25 @@ int main(int argc, char *argv[]) {
                 if(count > 1) {
                         //ignore the header
                         const char* name = get_item(buff, name_column);
-                        //printf( "%s\n", name);
-                        strcpy(name_array[count-1], name);
-                        //name_array[count-1] = name;
+						// look for this name in the tweeter array
+						int pos = tweeterFind(name, num_tweeters, tweeter_array);
+						if(pos >= 0){
+							// increment tweet count
+						  tweeter_array[pos].tweet_count ++;
+						}
+						else{
+							// create new tweeter and increment tweet count
+						   strcpy(tweeter_array[num_tweeters].name , name);
+						   tweeter_array[num_tweeters].tweet_count++;
+						   num_tweeters++;
+						}
                 }
         } while((getc(file))!=EOF);
 
 
-        for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
-                printf("%s\n", name_array[i]);
-        }
+        // for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
+        //         printf("%s\n", name_array[i]);
+        // }
 
         //sort tweeter_array by tweet count (merge sort maybe)
         merge_sort(tweeter_array, 0, MAX_CSV_FILE_LEN);

@@ -47,6 +47,7 @@ void merge(struct Tweeter tweeter_array[], int l, int m, int r) {
         int left_array_len = m - l + 1;
         struct Tweeter L[left_array_len];
         for (int i = 0; i < left_array_len; i++) {
+
                 strcpy(L[i].name, tweeter_array[l + i].name);
                 L[i].tweet_count = tweeter_array[l + i].tweet_count;
         }
@@ -55,6 +56,7 @@ void merge(struct Tweeter tweeter_array[], int l, int m, int r) {
         int right_array_len = r - m;
         struct Tweeter R[right_array_len];
         for (int j = 0; j < right_array_len; j++) {
+
                 strcpy(R[j].name, tweeter_array[m + 1 + j].name);
                 R[j].tweet_count = tweeter_array[m + 1 + j].tweet_count;
         }
@@ -66,6 +68,7 @@ void merge(struct Tweeter tweeter_array[], int l, int m, int r) {
         // merge arrays decreasing order
         while (i < left_array_len && j < right_array_len) {
                 //compare the tweet counts
+
                 if (L[i].tweet_count <= R[j].tweet_count) {
                         strcpy(tweeter_array[k].name, R[j].name);
                         tweeter_array[k].tweet_count = R[j].tweet_count;
@@ -177,8 +180,10 @@ int main(int argc, char *argv[]) {
                 }
         } while((getc(file))!=EOF);
 
+		//printf("%d\n", num_tweeters);
+
         //sort tweeter_array by tweet count (merge sort maybe)
-        merge_sort(tweeter_array, 0, MAX_CSV_FILE_LEN);
+        merge_sort(tweeter_array, 0, num_tweeters);
 
         //output top 10 tweeters name and count
         print_top_ten(tweeter_array);

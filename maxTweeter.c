@@ -123,19 +123,19 @@ int find(char* columnName, char* row){
 }
 
 //find tweeter position in list
-int tweeterFind(const char* name , int num_tweeters, struct Tweeter tweeter_array[]){
-	for (int i = 0; i < num_tweeters; i++) {
-		if(strcmp(name, tweeter_array[i].name) == 0){
-			return i;
-		}
-    }
-	//tweeter not found
-	return -1;
+int tweeterFind(const char* name, int num_tweeters, struct Tweeter tweeter_array[]){
+        for (int i = 0; i < num_tweeters; i++) {
+                if(strcmp(name, tweeter_array[i].name) == 0) {
+                        return i;
+                }
+        }
+        //tweeter not found
+        return -1;
 }
 
 int main(int argc, char *argv[]) {
-    struct Tweeter tweeter_array[MAX_CSV_FILE_LEN];
-		int num_tweeters = 0;
+        struct Tweeter tweeter_array[MAX_CSV_FILE_LEN];
+        int num_tweeters = 0;
         for (int i = 0; i < MAX_CSV_FILE_LEN; i++) {
                 struct Tweeter new_tweeter = {"", 0};
                 tweeter_array[i] = new_tweeter;
@@ -166,21 +166,19 @@ int main(int argc, char *argv[]) {
                 if(count > 1) {
                         //ignore the header
                         const char* name = get_item(buff, name_column);
-            						int pos = tweeterFind(name, num_tweeters, tweeter_array);
-            						if(pos >= 0){
-            							// increment tweet count
-            						  tweeter_array[pos].tweet_count ++;
-            						}
-            						else{
-            							// create new tweeter and increment tweet count
-            						   strcpy(tweeter_array[num_tweeters].name , name);
-            						   tweeter_array[num_tweeters].tweet_count++;
-            						   num_tweeters++;
-            						}
+                        int pos = tweeterFind(name, num_tweeters, tweeter_array);
+                        if(pos >= 0) {
+                                // increment tweet count
+                                tweeter_array[pos].tweet_count++;
+                        }
+                        else{
+                                // create new tweeter and increment tweet count
+                                strcpy(tweeter_array[num_tweeters].name, name);
+                                tweeter_array[num_tweeters].tweet_count++;
+                                num_tweeters++;
+                        }
                 }
         } while((getc(file))!=EOF);
-
-		//printf("%d\n", num_tweeters);
 
         //sort tweeter_array by tweet count (merge sort maybe)
         merge_sort(tweeter_array, 0, num_tweeters);

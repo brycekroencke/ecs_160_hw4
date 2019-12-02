@@ -126,6 +126,8 @@ int main(int argc, char *argv[]) {
         }
 
         //Argument 1 given by user is the file_path to the csv file
+
+        // !!!!! CHANGE BACK TO ARGV[1] !!!!!!
         FILE *file = fopen("cl-tweets-short-clean.csv", "r"); //fopen(argv[1], "r");
 
         if (!file) {
@@ -136,7 +138,6 @@ int main(int argc, char *argv[]) {
         int name_column;
 
         //read in CSV and fill tweeter_array with names and updated counts
-
         char name_array[MAX_CSV_FILE_LEN][MAX_CHARS_IN_NAME];
         int count=0;
         do {
@@ -144,15 +145,13 @@ int main(int argc, char *argv[]) {
                 fgets(buff, 1024, (FILE*)file);
                 count++;
                 if(count == 1) {
+                        //find the column number of name in the header
                         name_column = find("name", buff);
-                        //printf("%d \n", name_column);
                 }
                 if(count > 1) {
                         //ignore the header
                         const char* name = get_item(buff, name_column);
-                        //printf( "%s\n", name);
                         strcpy(name_array[count-1], name);
-                        //name_array[count-1] = name;
                 }
         } while((getc(file))!=EOF);
 

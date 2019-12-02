@@ -4,6 +4,7 @@
 #include <string.h>
 
 
+
 //Given Definitions
 #define MAX_CSV_LINE_CHARS 1024
 #define MAX_CSV_FILE_LEN 20000
@@ -21,7 +22,7 @@ struct Tweeter {
 //Function for printing out the top 10 tweeters
 void print_top_ten(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN])
 {
-        for (int i = 1; i < 11; i++) {
+        for (int i = 0; i < 10; i++) {
                 printf("%s: %d\n", tweeter_array[i].name, tweeter_array[i].tweet_count);
         }
 }
@@ -150,7 +151,6 @@ int main(int argc, char *argv[]) {
         int name_column;
 
         //read in CSV and fill tweeter_array with names and updated counts
-        // char name_array[MAX_CSV_FILE_LEN][MAX_CHARS_IN_NAME];
         int count=0;
         do {
                 char buff[1024];
@@ -163,8 +163,6 @@ int main(int argc, char *argv[]) {
                 if(count > 1) {
                         //ignore the header
                         const char* name = get_item(buff, name_column);
-            						// look for this name in the tweeter array
-                        //if (name !=  ){
             						int pos = tweeterFind(name, num_tweeters, tweeter_array);
             						if(pos >= 0){
             							// increment tweet count
@@ -182,10 +180,6 @@ int main(int argc, char *argv[]) {
         //sort tweeter_array by tweet count (merge sort maybe)
         merge_sort(tweeter_array, 0, MAX_CSV_FILE_LEN);
 
-        for (int i=0;  i <=MAX_CSV_FILE_LEN; i++)
-        {
-          printf("%s %d\n", tweeter_array[i].name, tweeter_array[i].tweet_count);
-        }
         //output top 10 tweeters name and count
         print_top_ten(tweeter_array);
 

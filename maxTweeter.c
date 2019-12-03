@@ -3,7 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+/*
+ * TO_DO
+ * Find return -1 if name is never found
+ * Check return if tweeter array contains less then 10 tweeters
+ * Check null csv behavior
+ */
 
 //Given Definitions
 #define MAX_CSV_LINE_CHARS 1024
@@ -31,6 +36,10 @@ const char* get_item(char* input_line, int column_number)
 {
         int count = 0;
         const char* split_by_comma;
+        // if(strlen(input_line) == 0) {
+        //   // printf("%s\n", "name empty");
+        //   exit(1);
+        // }
         while ((split_by_comma = strsep(&input_line, ",")) != NULL)
         {
                 if (count == column_number) {
@@ -38,6 +47,7 @@ const char* get_item(char* input_line, int column_number)
                 }
                 count++;
         }
+        //printf("%s\n", input_line);
         return NULL;
 }
 
@@ -107,10 +117,13 @@ void merge_sort(struct Tweeter tweeter_array[], int l, int r) {
 }
 
 //function to return column number by comparing column names in header
+//IF NAME NOT FOUND RETURN -1 or something
 int find(char* columnName, char* row){
         char* tokens =strtok(row, ",");
+        printf("%s\n", tokens);
         int count = 0;
         while(tokens != NULL ) {
+                printf("%s\n", tokens);
                 if(strcmp(tokens, columnName) == 0) {
                         return count;
                 }
@@ -144,9 +157,10 @@ int main(int argc, char *argv[]) {
         //Argument 1 given by user is the file_path to the csv file
 
         // !!!!! CHANGE BACK TO ARGV[1] !!!!!!
-        FILE *file = fopen("cl-tweets-short-clean.csv", "r"); //fopen(argv[1], "r");
+        FILE *file = fopen("empty-tweets.csv", "r"); //fopen(argv[1], "r");
 
         if (!file) {
+                printf("INVALID FILE");
                 exit(1);
         }
 
@@ -159,9 +173,16 @@ int main(int argc, char *argv[]) {
                 char buff[1024];
                 fgets(buff, 1024, (FILE*)file);
                 count++;
+
+                if (strlen(buff) != 0) {
+                    break;
+                }
                 if(count == 1) {
                         //find the column number of name in the header
                         name_column = find("name", buff);
+                        if (name_column == 0){
+                          return 0;
+                        }
                 }
                 if(count > 1) {
                         //ignore the header

@@ -174,7 +174,8 @@ int main(int argc, char *argv[]) {
                 fgets(buff, 1024, (FILE*)file);
                 count++;
 
-                if (strlen(buff) != 0) {
+                //printf("%lu\n", strlen(buff));
+                if (strlen(buff) <= 1) {
                     break;
                 }
                 if(count == 1) {

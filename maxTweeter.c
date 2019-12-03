@@ -25,9 +25,9 @@ struct Tweeter {
 };
 
 //Function for printing out the top 10 tweeters
-void print_top_ten(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN])
+void print_top(struct Tweeter tweeter_array[MAX_CSV_FILE_LEN], int num_to_print)
 {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < num_to_print; i++) {
                 printf("%s: %d\n", tweeter_array[i].name, tweeter_array[i].tweet_count);
         }
 }
@@ -36,10 +36,6 @@ const char* get_item(char* input_line, int column_number)
 {
         int count = 0;
         const char* split_by_comma;
-        // if(strlen(input_line) == 0) {
-        //   // printf("%s\n", "name empty");
-        //   exit(1);
-        // }
         while ((split_by_comma = strsep(&input_line, ",")) != NULL)
         {
                 if (count == column_number) {
@@ -47,7 +43,6 @@ const char* get_item(char* input_line, int column_number)
                 }
                 count++;
         }
-        //printf("%s\n", input_line);
         return NULL;
 }
 
@@ -120,10 +115,8 @@ void merge_sort(struct Tweeter tweeter_array[], int l, int r) {
 //IF NAME NOT FOUND RETURN -1 or something
 int find(char* columnName, char* row){
         char* tokens =strtok(row, ",");
-        printf("%s\n", tokens);
         int count = 0;
         while(tokens != NULL ) {
-                printf("%s\n", tokens);
                 if(strcmp(tokens, columnName) == 0) {
                         return count;
                 }
@@ -174,16 +167,12 @@ int main(int argc, char *argv[]) {
                 fgets(buff, 1024, (FILE*)file);
                 count++;
 
-                //printf("%lu\n", strlen(buff));
                 if (strlen(buff) <= 1) {
                     break;
                 }
                 if(count == 1) {
                         //find the column number of name in the header
                         name_column = find("name", buff);
-                        if (name_column == 0){
-                          return 0;
-                        }
                 }
                 if(count > 1) {
                         //ignore the header
@@ -205,8 +194,17 @@ int main(int argc, char *argv[]) {
         //sort tweeter_array by tweet count (merge sort maybe)
         merge_sort(tweeter_array, 0, num_tweeters);
 
+        //No tweeters, print nothing
+        if (num_tweeters == 0){
+          return 0;
+        }
         //output top 10 tweeters name and count
-        print_top_ten(tweeter_array);
+        if (num_tweeters < 10){
+          print_top(tweeter_array, num_tweeters);
+        }
+        else{
+          print_top(tweeter_array, 10);
+        }
 
         return 0;
 }

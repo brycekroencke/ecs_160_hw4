@@ -114,18 +114,18 @@ void merge_sort(struct Tweeter tweeter_array[], int l, int r) {
 //function to return column number by comparing column names in header
 //IF NAME NOT FOUND RETURN -1 or something
 int find(char* columnName, char* row){
-        char* tokens =strtok(row, ",");
-        int count = 0;
-        while(tokens != NULL ) {
-                if(strcmp(tokens, columnName) == 0) {
-                        return count;
-                }
-                else{
-                        count++;
-                        tokens = strtok(NULL, ",");
-                }
-        }
-        return count;
+
+	        const char* tokens;
+	        int count = 0;
+	        while((tokens = strsep(&row, ",")) != NULL ) {
+	                if(strcmp(tokens, columnName) == 0) {
+	                        return count;
+	                }
+	                else{
+	                        count++;
+	                }
+	        }
+	        return -1;
 }
 
 //find tweeter position in list
@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
         //Argument 1 given by user is the file_path to the csv file
 
         // !!!!! CHANGE BACK TO ARGV[1] !!!!!!
-        FILE *file = fopen("empty-tweets.csv", "r"); //fopen(argv[1], "r");
+        FILE *file = fopen(argv[1], "r");
 
         if (!file) {
                 printf("INVALID FILE");
@@ -173,6 +173,9 @@ int main(int argc, char *argv[]) {
                 if(count == 1) {
                         //find the column number of name in the header
                         name_column = find("name", buff);
+						if(name_column == -1){
+							return 0;
+						}
                 }
                 if(count > 1) {
                         //ignore the header

@@ -189,6 +189,7 @@ int main(int argc, char *argv[]) {
                         //find the column number of name in the header
                         name_column = find("\"name\"", buff);
 						if(name_column == -1){
+              printf("Invalid Input Format\n");
 							return 0;
 						}
                 }

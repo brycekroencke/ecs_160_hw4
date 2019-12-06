@@ -5,9 +5,9 @@
 int findField(char *buf, const char *fname, const char sep) {
 
 
-  int ret= -1; 
-  int pos = 1; 
-  const char *tok; 
+  int ret= -1;
+  int pos = 1;
+  const char *tok;
   for(tok = strtok(buf,&sep);
       tok && *tok;
       tok = strtok(NULL, &sep))
@@ -25,7 +25,7 @@ int findField(char *buf, const char *fname, const char sep) {
 
 int findTweeter(char **table, const char *thisone, int count) {
   int pos = 0;
-  while(pos < count) { 
+  while(pos < count) {
     if(strcmp(table[pos], thisone)==0)
       return pos;
     else pos++;
@@ -55,9 +55,9 @@ int main(int argc, char** argv)
   char line[1024];
   char *tweeters[25000];
   int nums[25000];
-  char *thisguy; 
+  char *thisguy;
   int thispos;
-  int fpos = -1; 
+  int fpos = -1;
   float lines = 0;
   int twCount=0;
   int toppers[25000];
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 
   fgets(line, 1024, stream);
   fpos = findField(line,"\"name\"",',');
- 
+
   while (fgets(line, 1024, stream)) {
     thisguy = strdup(getField(line,9));
     thispos = findTweeter(tweeters,thisguy,twCount);
@@ -93,6 +93,3 @@ int main(int argc, char** argv)
     printf("\nThe top tweeters no %d is %s",i,tweeters[toppers[i]]);
 
 }
-
-
-
